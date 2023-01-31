@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+    <script src="{{ url_for('static', filename = 'node_modules/jquery/dist/jquery.min.js') }}"> </script>
+
+    <title>
+        {% block title %}<!-- Placeholder for Title -->{% endblock %}
+    </title>
+
+    {% block head %}
+    <!-- Placeholder for Other Imports -->
+    {% endblock %}
+
+</head>
+<body>
+
+    {% set current_route = request.path %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{url_for('main.index')}}">Events Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link {% if current_route == url_for('main.index') %} current {% endif %}" href="{{url_for('main.index')}}">Home</a>
+                    <a class="nav-item nav-link {% if current_route == url_for('main.about') %} current {% endif %}" href="{{url_for('main.about')}}">About</a>
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-item nav-link {% if current_route == url_for('auth.logout') %} current {% endif %}" href="{{url_for('auth.logout')}}">Logout</a>
+                    {% else %}
+                        <a class="nav-item nav-link {% if current_route == url_for('auth.login') %} current {% endif %}" href="{{url_for('auth.login')}}">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content">
+        {% block content %}
+        <!-- Placeholder for Page Content -->
+        {% endblock %}
+    </div>
+    <footer class="bg-light py-3">
+        <div class="container">
+            <p class="text-center">Copyright © 2023 All Rights Reserved</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

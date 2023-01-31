@@ -1,0 +1,41 @@
+
+
+{% macro render_form_field(field) %}
+    {{ field.label(class_="control-label text-left") }}
+    {{ field(class_="form-control", size=32) }}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_alerts() %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% elif category == 'warning' %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% elif category == 'danger' %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% elif category == 'info' %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-primary">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='javascript/animations.js') }}"></script>
+    <script>
+        fadeOut(selector =".alert");
+    </script>
+
+{% endmacro %}
+
+
+

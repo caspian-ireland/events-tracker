@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros with context %}
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="margin-top:100px;">
+
+    <div class="text-left" style="width: 400px;">
+    <br>
+    <h1 class="text-center">Login</h1>
+
+    {{ macros.render_alerts() }}
+
+    {% if form %}
+    <form action="{{url_for('auth.login')}}" method="POST">
+        <div class="form-group">
+            {{ form.csrf_token }}
+            {{ macros.render_form_field(form.email) }}
+            {{ macros.render_form_field(form.password) }}
+            <div class="text-center mt-3">
+                {{ form.submit(class_="btn btn-primary btn-lg") }}
+                <p class="d-inline-block mx-3 my-2" style="font-size: larger;">or</p>
+                <a href="{{url_for('auth.signup')}}" type="button" class="btn btn-outline-primary btn-lg">Sign Up</a>
+            </div>
+        </div>
+
+    </form>
+
+    {% endif %}
+    <hr>
+
+    </div>
+</div>
+{% endblock %}
