@@ -1,14 +1,11 @@
 import flask
 import dotenv
 from flask import make_response, render_template
+from .assets import compile_assets
 from eventstracker.auth import auth as auth_blueprint
 from eventstracker.main import main as main_blueprint
 
-from eventstracker.extensions import (
-    csrf_protect,
-    db,
-    login_manager,
-)
+from eventstracker.extensions import csrf_protect, db, login_manager, assets
 
 dotenv.load_dotenv(".env")
 
@@ -22,6 +19,7 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        compile_assets(assets)
 
     return app
 
@@ -31,6 +29,7 @@ def register_extensions(app):
     db.init_app(app)
     csrf_protect.init_app(app)
     login_manager.init_app(app)
+    assets.init_app(app)
     login_manager.login_view = "auth.login"
     return None
 
