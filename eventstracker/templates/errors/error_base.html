@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="margin-top:50px;">
+  <div class = "container text-center", style="width: 800px;">
+
+    <h1>
+        {% block text_header %}
+        <!-- Content Header Goes Here -->
+        {% endblock %}
+    </h1>
+
+    <div class="alert alert-danger" role="alert">
+        {% block text_message %}
+        <!-- Content Message goes here -->
+        {% endblock %}
+    </div>
+    <a href="{{url_for('main.index')}}" type="button" class="btn btn-primary btn-lg">Return to homepage</a>
+    <hr>
+  </div>
+</div>
+{% endblock %}
