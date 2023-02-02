@@ -1,3 +1,6 @@
+"""
+Flask blueprint for authentication routes.
+"""
 import flask
 import typing
 from flask import render_template
@@ -13,16 +16,19 @@ auth = flask.Blueprint("auth", __name__, template_folder="templates")
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup() -> typing.Union[str, WerkResponse]:
+    """Signup Route."""
+
     form = forms.SignUpForm()
 
+    # Check form is valid and sent with 'POST'
     if form.validate_on_submit():
 
         email = form.email.data
         name = form.name.data
         password = form.password.data
 
+        # If user already exists redirect to signin
         user = models.User.query.filter_by(email=email).first()
-
         if user:
             flask.flash(
                 "Email already taken! Please sign in or use another email address.",
@@ -30,6 +36,7 @@ def signup() -> typing.Union[str, WerkResponse]:
             )
             return flask.redirect(flask.url_for("auth.signin"))
 
+        # If new user then add to database and redirect to login
         new_user = models.User(
             email=email,
             name=name,
@@ -53,9 +60,10 @@ def signup() -> typing.Union[str, WerkResponse]:
 
 @auth.route("/login", methods=["GET", "POST"])
 def login() -> typing.Union[str, WerkResponse]:
-
+    """Login Route."""
     form = forms.LoginForm()
 
+    # Check form is valid and sent with 'POST'
     if form.validate_on_submit():
 
         email = form.email.data
@@ -63,6 +71,7 @@ def login() -> typing.Union[str, WerkResponse]:
 
         user = models.User.query.filter_by(email=email).first()
 
+        # Check user exists and password correct
         if not user or not check_password_hash(user.password, password):
             flask.flash(
                 "Please check your login details and try again.", category="danger"
@@ -86,6 +95,7 @@ def login() -> typing.Union[str, WerkResponse]:
 @auth.route("/logout")
 @login_required
 def logout() -> WerkResponse:
+    """Logout Route."""
     logout_user()
     flask.flash(message="Logout successful. ", category="success")
     return flask.redirect(flask.url_for("main.index"))
