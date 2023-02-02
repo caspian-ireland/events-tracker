@@ -7,6 +7,13 @@ class Config(object):
     ASSETS_DEBUG = False
     ASSETS_AUTO_BUILD = True
     FLASK_DEBUG = os.getenv("FLASK_DEBUG")
+    SASS_BIN = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "static",
+        "node_modules",
+        ".bin",
+        "sass",
+    )
 
 
 class ProductionConfig(Config):

@@ -4,8 +4,7 @@
   "description": "Find and track changes to events.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile_sass": "sass --watch scss:assets/css"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
