@@ -44,9 +44,9 @@ def signup():
             message="Error! Please check validation messages and try again.",
             category="danger",
         )
-        return render_template("signup.html", form=form)
+        return render_template("signup.jinja2", form=form)
 
-    return render_template("signup.html", form=form)
+    return render_template("signup.jinja2", form=form)
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -78,7 +78,7 @@ def login():
         )
         return flask.redirect(flask.url_for("auth.login"))
 
-    return render_template("login.html", form=form)
+    return render_template("login.jinja2", form=form)
 
 
 @auth.route("/logout")

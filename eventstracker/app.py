@@ -48,25 +48,25 @@ def register_error_handlers(app):
     @app.errorhandler(400)
     def bad_request(e):
         """Bad request."""
-        return make_response(render_template("errors/400.html"), 400)
+        return make_response(render_template("errors/400.jinja2"), 400)
+
+    @app.errorhandler(401)
+    def unauthorized(e):
+        """Unauthorized"""
+        return make_response(render_template("errors/401.jinja2"), 401)
 
     # 403 - Forbidden
     @app.errorhandler(403)
     def forbidden(e):
         """Forbidden."""
-        return make_response(render_template("errors/403.html"), 403)
+        return make_response(render_template("errors/403.jinja2"), 403)
 
     @app.errorhandler(404)
     def not_found(e):
         """Page not found."""
-        return make_response(render_template("errors/404.html"), 404)
-
-    @app.errorhandler(405)
-    def method_not_allowed(e):
-        """Method Not Allowed."""
-        return make_response(render_template("errors/405.html"), 405)
+        return make_response(render_template("errors/404.jinja2"), 404)
 
     @app.errorhandler(500)
     def server_error(e):
         """Internal server error."""
-        return make_response(render_template("errors/500.html"), 500)
+        return make_response(render_template("errors/500.jinja2"), 500)
