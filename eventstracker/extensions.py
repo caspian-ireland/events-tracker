@@ -1,3 +1,5 @@
+from __future__ import annotations
+import typing
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
@@ -11,5 +13,5 @@ assets = Environment()
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: str) -> typing.Union[models.User, None]:
     return models.User.query.get(int(user_id))

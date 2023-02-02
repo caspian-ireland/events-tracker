@@ -2,7 +2,9 @@ from eventstracker.extensions import db
 from flask_login import UserMixin
 
 
-class User(UserMixin, db.Model):
+# TODO - fix db.Model mypy error
+# Known issue: https://github.com/dropbox/sqlalchemy-stubs/issues/76
+class User(UserMixin, db.Model):  # type: ignore
     id = db.Column(
         db.Integer, primary_key=True
     )  # primary keys are required by SQLAlchemy

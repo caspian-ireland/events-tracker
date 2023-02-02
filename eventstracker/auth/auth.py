@@ -1,16 +1,18 @@
 import flask
+import typing
 from flask import render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from eventstracker.auth import forms
 from eventstracker.auth import models
 from eventstracker.extensions import db
+from werkzeug.wrappers.response import Response as WerkResponse
 
 auth = flask.Blueprint("auth", __name__, template_folder="templates")
 
 
 @auth.route("/signup", methods=["GET", "POST"])
-def signup():
+def signup() -> typing.Union[str, WerkResponse]:
     form = forms.SignUpForm()
 
     if form.validate_on_submit():
@@ -50,7 +52,7 @@ def signup():
 
 
 @auth.route("/login", methods=["GET", "POST"])
-def login():
+def login() -> typing.Union[str, WerkResponse]:
 
     form = forms.LoginForm()
 
@@ -83,7 +85,7 @@ def login():
 
 @auth.route("/logout")
 @login_required
-def logout():
+def logout() -> WerkResponse:
     logout_user()
     flask.flash(message="Logout successful. ", category="success")
     return flask.redirect(flask.url_for("main.index"))

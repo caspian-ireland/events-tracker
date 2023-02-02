@@ -3,7 +3,7 @@ from flask import current_app as app
 import flask_assets
 
 
-def compile_assets(assets):
+def compile_assets(assets: flask_assets.Environment) -> None:
     """Configure and build asset bundles."""
 
     style_bundle = flask_assets.Bundle(
